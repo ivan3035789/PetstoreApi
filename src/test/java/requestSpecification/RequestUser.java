@@ -8,18 +8,16 @@ import io.restassured.specification.RequestSpecification;
 import jdk.jfr.Description;
 import page.PageUser;
 import scheme.UserCreationScheme;
-import scheme.UserUpdateScheme;
-import utils.Utils;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
 
 public class RequestUser {
     Gson gson = new Gson();
     PageUser pageUser = new PageUser();
     UserCreationScheme userCreationScheme = new UserCreationScheme();
-    UserUpdateScheme userUpdateScheme = new UserUpdateScheme();
-    Utils utils = new Utils();
 
     RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri(pageUser.getBaseUri())
@@ -28,45 +26,62 @@ public class RequestUser {
             .log(LogDetail.ALL)
             .build();
 
-    @Description("Метод POST создать ользователя")
-    public void createUser() {
+    @Description("Метод POST создать пользователя")
+    public void createUser(String IdUser,
+                           String Username,
+                           String FirstName,
+                           String LastName,
+                           String Email,
+                           String Password,
+                           String Phone,
+                           String UserStatus) {
         given()
                 .spec(requestSpec)
-                .body(gson.toJson(userCreationScheme.getJsonObject()))
+                .body(gson.toJson(userCreationScheme.schema(IdUser,
+                        Username,
+                        FirstName,
+                        LastName,
+                        Email,
+                        Password,
+                        Phone,
+                        UserStatus)))
                 .when()
-                .post(pageUser.getCreationUser())
+                .post(pageUser.creationUser())
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo("894307801"));
     }
 
     @Description("Метод DELETE удалить пользователя")
-    public void deleteUser() {
+    public void deleteUser(String userName) {
         given()
                 .spec(requestSpec)
                 .when()
-                .delete(pageUser.getRemovalUser()) // удалить ользователя
+                .delete(pageUser.removalUser(userName))
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo("Genka"));
     }
 
     @Description("Метод GET найти пользователя")
-    public void getUser() {
+    public void getUser(String userName) {
         given()
                 .spec(requestSpec)
                 .when()
-                .get(pageUser.getUserGetPage())
+                .get(pageUser.userGetPage(userName))
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
                 .body("id", equalTo(894307801))
                 .body("username", equalTo("Genka"))
                 .body("firstName", equalTo("Genadiy"))
@@ -74,34 +89,53 @@ public class RequestUser {
                 .body("email", equalTo("Genadiy@rambler.ru"))
                 .body("password", equalTo("0000"))
                 .body("phone", equalTo("83332222222"))
-                .body("userStatus", equalTo(1));
+                .body("userStatus", equalTo(1))
+                .body(matchesJsonSchemaInClasspath("schemaUser.json"));
     }
 
     @Description("Метод PUT изменить данные ользователя")
-    public void updateUser() {
+    public void updateUser(String IdUser,
+                           String Username,
+                           String FirstName,
+                           String LastName,
+                           String Email,
+                           String Password,
+                           String Phone,
+                           String UserStatus) {
         given()
                 .spec(requestSpec)
-                .body(gson.toJson(userUpdateScheme.getJsonObject()))
+                .body(gson.toJson(userCreationScheme.schema(
+                        IdUser,
+                        Username,
+                        FirstName,
+                        LastName,
+                        Email,
+                        Password,
+                        Phone,
+                        UserStatus)))
                 .when()
-                .put(pageUser.getUserGetPage())
+                .put(pageUser.userGetPage(Username))
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
-                .body("message", equalTo("894307801"));
+                .body("message", equalTo("894307801"))
+                .body(matchesJsonSchemaInClasspath("schemaUser.json"));
     }
 
     @Description("Метод GET найти пользователя")
-    public void getUpdateUser() {
+    public void getUpdateUser(String userName) {
         given()
                 .spec(requestSpec)
                 .when()
-                .get(pageUser.getUserGetPage())
+                .get(pageUser.userGetPage(userName))
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
                 .body("id", equalTo(894307801))
                 .body("username", equalTo("Genka"))
                 .body("firstName", equalTo("Genadiy"))
@@ -109,6 +143,69 @@ public class RequestUser {
                 .body("email", equalTo("Genadiy@rambler.ru"))
                 .body("password", equalTo("1111"))
                 .body("phone", equalTo("84442222222"))
-                .body("userStatus", equalTo(1));
+                .body("userStatus", equalTo(1))
+                .body(matchesJsonSchemaInClasspath("schemaUser.json"));
+    }
+
+    @Description("Метод GET регистрирует пользователя в системе")
+    public void logsUserIntoSystem(String IdUser,
+                                   String Username,
+                                   String FirstName,
+                                   String LastName,
+                                   String Email,
+                                   String Password,
+                                   String Phone,
+                                   String UserStatus) {
+        given()
+                .spec(requestSpec)
+                .body(gson.toJson(userCreationScheme.schema(
+                        IdUser,
+                        Username,
+                        FirstName,
+                        LastName,
+                        Email,
+                        Password,
+                        Phone,
+                        UserStatus)))
+                .when()
+                .get(pageUser.logsUserIntoSystem(Username, Password))
+                .then()
+                .statusCode(200)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("type", equalTo("unknown"));
+//                .body("message", equalTo("logged in user session:" + номер сессии 1254879));
+    }
+
+    @Description("Метод GET выход пользователя из системы")
+    public void userLogout(String IdUser,
+                           String Username,
+                           String FirstName,
+                           String LastName,
+                           String Email,
+                           String Password,
+                           String Phone,
+                           String UserStatus) {
+        given()
+                .spec(requestSpec)
+                .body(gson.toJson(userCreationScheme.schema(
+                        IdUser,
+                        Username,
+                        FirstName,
+                        LastName,
+                        Email,
+                        Password,
+                        Phone,
+                        UserStatus)))
+                .when()
+                .get(pageUser.userLogoutFromSystem(Username))
+                .then()
+                .statusCode(200)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("type", equalTo("unknown"))
+                .body("message", equalTo("ok"));
     }
 }

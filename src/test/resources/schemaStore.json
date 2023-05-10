@@ -1,0 +1,8 @@
+{
+  "id": "integer",
+  "petId": "integer",
+  "quantity": "integer",
+  "shipDate": "string",
+  "status": "string",
+  "complete": "boolean"
+}

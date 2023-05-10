@@ -11,12 +11,21 @@ public class UserCreationPagePetTest {
 
     @BeforeEach
     public void setUp() {
-        requestUser.createUser();
+        requestUser.createUser(
+                "894307801",
+                "Genka",
+                "Genadiy",
+                "Ivanov",
+                "Genadiy@rambler.ru",
+                "0000",
+                "83332222222",
+                "1"
+        );
     }
 
     @AfterEach
     public void clearingData() {
-        requestUser.deleteUser();
+        requestUser.deleteUser("Genka");
     }
 
     @Order(1)
@@ -24,7 +33,7 @@ public class UserCreationPagePetTest {
     @DisplayName("In this test case, we check the creation of a user")
     @Test
     public void mustCreateUser() {
-        requestUser.getUser();
+        requestUser.getUser("Genka");
     }
 
     @Order(2)
@@ -32,7 +41,50 @@ public class UserCreationPagePetTest {
     @DisplayName("In this test case, we check the change of user data")
     @Test
     public void mustUpdateUser() {
-        requestUser.updateUser();
-        requestUser.getUpdateUser();
+        requestUser.updateUser(
+                "894307801",
+                "Genka",
+                "Genadiy",
+                "Ivanov",
+                "Genadiy@rambler.ru",
+                "1111",
+                "84442222222",
+                "1"
+        );
+        requestUser.getUpdateUser("Genka");
+    }
+
+
+    @Order(3)
+    @Description("В этом тест-кейсе мы проверяем вход пользователя в систему")
+    @DisplayName("In this test case, we check the user's login to the system")
+    @Test
+    public void mustLogIn() {
+        requestUser.logsUserIntoSystem(
+                "894307801",
+                "Genka",
+                "Genadiy",
+                "Ivanov",
+                "Genadiy@rambler.ru",
+                "0000",
+                "83332222222",
+                "1"
+        );
+    }
+    @Order(4)
+    @Description("В этом тест-кейсе мы проверяем выход пользователя из системы")
+    @DisplayName("In this test case, we check the user's logout")
+    @Test
+    public void userLogoutFromTheSystem() {
+        requestUser.userLogout(
+                "894307801",
+                "Genka",
+                "Genadiy",
+                "Ivanov",
+                "Genadiy@rambler.ru",
+                "0000",
+                "83332222222",
+                "1"
+        );
     }
 }
