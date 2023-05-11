@@ -141,39 +141,6 @@ public class RequestPet {
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"));
     }
 
-//    @Description("Метод POST обновляет данные питомца в магазине")
-//    public void updatesPetDataInStore(
-//            String IdOfTheCreatedPet,
-//            String IdCategory,
-//            String NameCategory,
-//            String NameOfTheCreatedPet,
-//            String IdTags,
-//            String NameTags,
-//            String StatusTags) {
-//
-//        given()
-//                .spec(requestSpec)
-//                .body(gson.toJson(petCreationScheme.schema(
-//                        IdOfTheCreatedPet,
-//                        IdCategory,
-//                        NameCategory,
-//                        NameOfTheCreatedPet,
-//                        IdTags,
-//                        NameTags,
-//                        StatusTags)))
-//                .when()
-//                .post(pagePet.petGetPage(IdOfTheCreatedPet))
-//                .then()
-//                .assertThat()
-//                .statusCode(200);
-//                .header("Content-Type", "application/json")
-//                .contentType(ContentType.JSON)
-//                .time(lessThan(5000L));
-//                .body("id", equalTo(89430780))
-//                .body("type", equalTo("unknown"))
-//                .body("message", equalTo(89430780));
-//                .body(matchesJsonSchemaInClasspath("schemaPet.json"));
-//    }
 
     @Description("Метод PUT не должен изменить id питомца ")
     public void mustNotChangePetId(
