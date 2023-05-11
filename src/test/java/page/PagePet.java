@@ -22,4 +22,14 @@ public class PagePet {
     public String petGetPage(String IdOfTheCreatedPet) {
         return "/pet/" + IdOfTheCreatedPet;
     }
+
+    @Description("узнать статус питомца")
+    public String petGetStatus(String status) {
+        return "/pet/findByStatus?status=" + status;
+    }
+
+//    @Description("обновляет данные питомца в магазине")
+//    public String updatesPetDataInStore(String IdOfTheCreatedPet, String name, String status) {
+//        return "/pet/" + IdOfTheCreatedPet + "?name=" + name + "&status=" + status;
+//    }
 }

@@ -22,4 +22,9 @@ public class PageShop {
     public String petGetStore(String getIdOfTheCreatedPet) {
         return "/store/order/" + getIdOfTheCreatedPet;
     }
+
+    @Description("возвращает количество животных в запасе")
+    public String mustFindOrderById() {
+        return "/store/inventory";
+    }
 }

@@ -78,4 +78,20 @@ public class PetToStoreTest {
     void mustAddPetStore() {
         requestShop.getPetStore("89430780");
     }
+
+    @Order(2)
+    @Description("В этом тест-кейсе мы проверяем ошуществление поиска заказа на покупку по идентификатору")
+    @DisplayName("the purchase order must be searched by ID")
+    @Test
+    void mustFindOrderById() {
+        requestShop.getPetStore("89430780");
+    }
+
+    @Order(2)
+    @Description("В этом тест-кейсе мы проверяем ошуществление поиска количества питомцев в запасе")
+    @DisplayName("must return the number of animals in stock")
+    @Test
+    void mustReturnNumberOfAnimalsInStock() {
+        requestShop.getFindOrderById();
+    }
 }

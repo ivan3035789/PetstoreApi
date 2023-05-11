@@ -124,4 +124,149 @@ public class RequestPet {
                 .body("tags[0].name", equalTo("rufus"))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"));
     }
+
+    @Description("Метод GET узнать статус питомца")
+    public void petGetStatus(String status) {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(pagePet.petGetStatus(status))
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("[0].status", equalTo("available"))
+                .body(matchesJsonSchemaInClasspath("schemaPet.json"));
+    }
+
+//    @Description("Метод POST обновляет данные питомца в магазине")
+//    public void updatesPetDataInStore(
+//            String IdOfTheCreatedPet,
+//            String IdCategory,
+//            String NameCategory,
+//            String NameOfTheCreatedPet,
+//            String IdTags,
+//            String NameTags,
+//            String StatusTags) {
+//
+//        given()
+//                .spec(requestSpec)
+//                .body(gson.toJson(petCreationScheme.schema(
+//                        IdOfTheCreatedPet,
+//                        IdCategory,
+//                        NameCategory,
+//                        NameOfTheCreatedPet,
+//                        IdTags,
+//                        NameTags,
+//                        StatusTags)))
+//                .when()
+//                .post(pagePet.petGetPage(IdOfTheCreatedPet))
+//                .then()
+//                .assertThat()
+//                .statusCode(200);
+//                .header("Content-Type", "application/json")
+//                .contentType(ContentType.JSON)
+//                .time(lessThan(5000L));
+//                .body("id", equalTo(89430780))
+//                .body("type", equalTo("unknown"))
+//                .body("message", equalTo(89430780));
+//                .body(matchesJsonSchemaInClasspath("schemaPet.json"));
+//    }
+
+    @Description("Метод PUT не должен изменить id питомца ")
+    public void mustNotChangePetId(
+            String IdOfTheCreatedPet,
+            String IdCategory,
+            String NameCategory,
+            String NameOfTheCreatedPet,
+            String IdTags,
+            String NameTags,
+            String StatusTags) {
+        given()
+                .spec(requestSpec)
+                .body(gson.toJson(petCreationScheme.schema(
+                        IdOfTheCreatedPet,
+                        IdCategory,
+                        NameCategory,
+                        NameOfTheCreatedPet,
+                        IdTags,
+                        NameTags,
+                        StatusTags)))
+                .when()
+                .put(pagePet.petCreationPage())
+                .then()
+                .assertThat()
+                .statusCode(500)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("type", equalTo("unknown"))
+                .body("message", equalTo("something bad happened"));
+    }
+
+    @Description("Метод GET не должен находить питомца по некорректному статусу")
+    public void mustNotFindPetByIncorrectStatus(String IdOfTheCreatedPet) {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(pagePet.petGetPage(IdOfTheCreatedPet))
+                .then()
+                .assertThat()
+                .statusCode(404)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("type", equalTo("unknown"))
+                .body("message", equalTo("java.lang.NumberFormatException: For input string: \"as\""));
+    }
+
+    @Description("Метод POST не должен создать питомца")
+    public void notCreatePet(
+            String IdOfTheCreatedPet,
+            String IdCategory,
+            String NameCategory,
+            String NameOfTheCreatedPet,
+            String IdTags,
+            String NameTags,
+            String StatusTags) {
+        given()
+                .spec(requestSpec)
+                .body(gson.toJson(petCreationScheme.schema(
+                        IdOfTheCreatedPet,
+                        IdCategory,
+                        NameCategory,
+                        NameOfTheCreatedPet,
+                        IdTags,
+                        NameTags,
+                        StatusTags)))
+                .when()
+                .post(pagePet.petCreationPage())
+                .then()
+                .assertThat()
+                .statusCode(500)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("type", equalTo("unknown"))
+                .body("message", equalTo("something bad happened"));
+    }
+
+    @Description("Метод GET не должен находить не созданного питомца")
+    public void mustNotFindAnUnCreatedPet(String IdOfTheCreatedPet) {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(pagePet.petGetPage(IdOfTheCreatedPet))
+                .then()
+                .assertThat()
+//                .statusCode(1)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body("code", equalTo(1))
+                .body("type", equalTo("error"))
+                .body("message", equalTo("Pet not found"));
+    }
 }

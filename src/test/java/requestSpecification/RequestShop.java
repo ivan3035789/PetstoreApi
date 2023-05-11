@@ -51,7 +51,6 @@ public class RequestShop {
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"))
                 .body("id", equalTo(89430780))
                 .body("petId", equalTo(1))
-//                .body("quantity", equalTo(1))
                 .body("status", equalTo("available"))
                 .body("complete", equalTo(true));
     }
@@ -84,8 +83,20 @@ public class RequestShop {
                 .body(matchesJsonSchemaInClasspath("schemaStore.json"))
                 .body("id", equalTo(89430780))
                 .body("petId", equalTo(1))
-//                .body("quantity", equalTo(1))
                 .body("status", equalTo("available"))
                 .body("complete", equalTo(true));
+    }
+
+    @Description("Метод GET найти количество питомцев в запасе")
+    public void getFindOrderById() {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(pageShop.mustFindOrderById())
+                .then()
+                .statusCode(200)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L));
     }
 }
