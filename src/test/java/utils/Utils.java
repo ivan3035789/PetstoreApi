@@ -8,14 +8,21 @@ public class Utils {
     Faker faker = new Faker();
     Random random = new Random();
 
-    public String idUser() {
-        String[] idUser = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        return idUser[random.nextInt(idUser.length)];
-    }
-
-    public String username() {
-        String[] username = {faker.name().username(), faker.name().username()};
-        return username[random.nextInt(username.length)];
+    public String idUser(int numberOfLetters) {
+        Random random = new Random();
+        String idUser;
+        int numberOfLettersValid;
+        String[] randomId = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        if (numberOfLetters > 9) {
+            numberOfLettersValid = 8;
+        } else {
+            numberOfLettersValid = numberOfLetters;
+        }
+        idUser = randomId[random.nextInt(randomId.length)];
+        for (int i = 1; i < numberOfLettersValid; i++) {
+            idUser = idUser.concat(randomId[random.nextInt(randomId.length)]);
+        }
+        return idUser;
     }
 
     public String firstName() {
@@ -34,10 +41,11 @@ public class Utils {
         String[] password = {faker.internet().password(), faker.internet().password()};
         return password[random.nextInt(password.length)];
     }
-    public String phone() {
-        String[] phone = {String.valueOf(faker.phoneNumber()), String.valueOf(faker.phoneNumber())};
-        return phone[random.nextInt(phone.length)];
+
+        public String phone(int num) {
+        return "+7" + faker.number().digits(num);
     }
+
     public String userStatus() {
         String[] userStatus = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
         return userStatus[random.nextInt(userStatus.length)];
@@ -55,51 +63,83 @@ public class Utils {
     }
 
     public String idCategory() {
-       return "1";
+        String[] randomId = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+       return randomId[random.nextInt(randomId.length)];
     }
 
     public String nameCategory() {
-        return "cat";
+        String[] nameCategory = {"dog", "cat", "rodent", "bird"};
+        return nameCategory[random.nextInt(nameCategory.length)];
     }
 
     public String nameOfTheCreatedPet() {
-        return "crty";
+        String[] name = {faker.name().firstName(), faker.name().firstName()};
+        return name[random.nextInt(name.length)];
     }
 
-    public String idTags() {
-        return "1";
+    public String idTags(String nameCategory) {
+        String id;
+        String[] idTags = {"1", "2", "3", "4"};
+        if (nameCategory.equals("dog")) {
+            id = idTags[0];
+        }
+        else if (nameCategory.equals("cat")) {
+            id = idTags[2];
+        }
+        else if (nameCategory.equals("rodent")) {
+            id = idTags[3];
+        } else {
+            id = idTags[4];
+        }
+        return id;
     }
 
-    public String UpdateTagsName() {
-        return "rufus";
+    public String UpdateTagsName(String idTags) {
+        String name;
+        String[] nameTags = {"dog", "cat", "rodent", "bird"};
+        if (idTags.equals("1")) {
+            name = nameTags[0];
+        }
+        else if (idTags.equals("2")) {
+            name = nameTags[2];
+        }
+        else if (idTags.equals("3")) {
+            name = nameTags[3];
+        } else {
+            name = nameTags[4];
+        }
+        return name;
     }
 
-    public String nameTags() {
-        return "crty";
+    public String nameTags(String idTags) {
+        String name;
+        String[] nameTags = {"dog", "cat", "rodent", "bird"};
+        if (idTags.equals("1")) {
+            name = nameTags[0];
+        }
+        else if (idTags.equals("2")) {
+            name = nameTags[2];
+        }
+        else if (idTags.equals("3")) {
+            name = nameTags[3];
+        } else {
+            name = nameTags[4];
+        }
+        return name;
     }
 
     public String statusTags() {
-        return "available";
+        String[] status = {"available", "pending", "sold"};
+        return status[random.nextInt(status.length)];
     }
-
-//    public String updatePassword() {
-//        String[] updatePassword = {faker.internet().password(), faker.internet().password()};
-//        return updatePassword[random.nextInt(updatePassword.length)];
-//    }
 
     public String updatePassword() {
-
-        return "1111";
+        String[] password = {faker.internet().password(), faker.internet().password()};
+        return password[random.nextInt(password.length)];
     }
 
-//    public String updatePhone() {
-//        String[] updatePhone = {String.valueOf(faker.phoneNumber()), String.valueOf(faker.phoneNumber())};
-//        return updatePhone[random.nextInt(updatePhone.length)];
-//    }
-
-    public String updatePhone() {
-
-        return "84442222222";
+    public String updatePhone(int num) {
+        return "+7" + faker.number().digits(num);
     }
 
     public String nonExistentUser() {

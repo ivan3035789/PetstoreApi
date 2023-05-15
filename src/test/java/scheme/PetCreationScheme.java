@@ -34,25 +34,6 @@ public class PetCreationScheme {
                 "}";
         return (JsonObject) JsonParser.parseString(jsonString);
     }
-
-//    private String jsonString = "{ " +
-//            "id : " + pet.getIdOfTheCreatedPet() + "," +
-//            "category : {" +
-//              "id : " + pet.getIdCategory() + "," +
-//              "name : " + pet.getNameCategory() +
-//            "}," +
-//            "name : " + pet.getNameOfTheCreatedPet() + "," +
-//            "photoUrls : [string]," +
-//            "tags : [" +
-//                "{" +
-//                  "id : " + pet.getIdTags() + "," +
-//                  "name : " + pet.getNameTags() +
-//                "}" +
-//            "]," +
-//            "status : " + pet.getStatusTags() +
-//            "}";
-//
-//    private JsonObject jsonObject = (JsonObject) JsonParser.parseString(jsonString);
 }
 
 

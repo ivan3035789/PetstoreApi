@@ -53,7 +53,7 @@ public class RequestUser {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
-                .body("message", equalTo("894307801"));
+                .body("message", equalTo(IdUser));
     }
 
     @Description("Метод DELETE удалить пользователя")
@@ -68,28 +68,37 @@ public class RequestUser {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
-                .body("message", equalTo("Genka"));
+                .body("message", equalTo(userName));
     }
 
     @Description("Метод GET найти пользователя")
-    public void getUser(String userName) {
+    public void getUser(
+            String IdUser,
+            String Username,
+            String FirstName,
+            String LastName,
+            String Email,
+            String Password,
+            String Phone,
+            String UserStatus) {
         given()
                 .spec(requestSpec)
                 .when()
-                .get(pageUser.userGetPage(userName))
+                .get(pageUser.userGetPage(
+                        Username))
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
-                .body("id", equalTo(894307801))
-                .body("username", equalTo("Genka"))
-                .body("firstName", equalTo("Genadiy"))
-                .body("lastName", equalTo("Ivanov"))
-                .body("email", equalTo("Genadiy@rambler.ru"))
-                .body("password", equalTo("0000"))
-                .body("phone", equalTo("83332222222"))
-                .body("userStatus", equalTo(1))
+                .body("id", equalTo(Integer.parseInt(IdUser)))
+                .body("username", equalTo(Username))
+                .body("firstName", equalTo(FirstName))
+                .body("lastName", equalTo(LastName))
+                .body("email", equalTo(Email))
+                .body("password", equalTo(Password))
+                .body("phone", equalTo(Phone))
+                .body("userStatus", equalTo(Integer.parseInt(UserStatus)))
                 .body(matchesJsonSchemaInClasspath("schemaUser.json"));
     }
 
@@ -121,29 +130,38 @@ public class RequestUser {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
-                .body("message", equalTo("894307801"))
+                .body("message", equalTo(IdUser))
                 .body(matchesJsonSchemaInClasspath("schemaUser.json"));
     }
 
     @Description("Метод GET найти пользователя")
-    public void getUpdateUser(String userName) {
+    public void getUpdateUser(
+            String IdUser,
+            String Username,
+            String FirstName,
+            String LastName,
+            String Email,
+            String Password,
+            String Phone,
+            String UserStatus) {
         given()
                 .spec(requestSpec)
                 .when()
-                .get(pageUser.userGetPage(userName))
+                .get(pageUser.userGetPage(
+                        Username))
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
-                .body("id", equalTo(894307801))
-                .body("username", equalTo("Genka"))
-                .body("firstName", equalTo("Genadiy"))
-                .body("lastName", equalTo("Ivanov"))
-                .body("email", equalTo("Genadiy@rambler.ru"))
-                .body("password", equalTo("1111"))
-                .body("phone", equalTo("84442222222"))
-                .body("userStatus", equalTo(1))
+                .body("id", equalTo(Integer.parseInt(IdUser)))
+                .body("username", equalTo(Username))
+                .body("firstName", equalTo(FirstName))
+                .body("lastName", equalTo(LastName))
+                .body("email", equalTo(Email))
+                .body("password", equalTo(Password))
+                .body("phone", equalTo(Phone))
+                .body("userStatus", equalTo(Integer.parseInt(UserStatus)))
                 .body(matchesJsonSchemaInClasspath("schemaUser.json"));
     }
 
@@ -175,7 +193,8 @@ public class RequestUser {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"));
-//                .body("message", equalTo("logged in user session:" + номер сессии 1254879));
+//                .body("message", equalTo("logged in user session:" + given().body("message".substring(10))));
+//                .body("message", equalTo("logged in user session:"));
     }
 
     @Description("Метод GET выход пользователя из системы")

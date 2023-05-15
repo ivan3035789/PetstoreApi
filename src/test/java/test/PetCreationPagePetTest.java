@@ -10,6 +10,14 @@ public class PetCreationPagePetTest {
 RequestPet requestPet = new RequestPet();
 Utils utils = new Utils();
 
+String idOfTheCreatedPet = utils.idOfTheCreatedPet(8);
+String idCategory = utils.idCategory();
+String nameCategory = utils.nameCategory();
+String nameOfTheCreatedPet = utils.nameOfTheCreatedPet();
+String idTags = utils.idTags(nameCategory);
+String nameTags = utils.nameTags(idTags);
+String statusTags = utils.statusTags();
+
     @BeforeEach
     public void setUp() {
         requestPet.createPet(
@@ -47,7 +55,7 @@ Utils utils = new Utils();
                 "cat",
                 utils.updateNamePet(),
                 "1",
-                utils.UpdateTagsName(),
+                utils.UpdateTagsName("1"),
                 utils.updateStatus());
     }
 

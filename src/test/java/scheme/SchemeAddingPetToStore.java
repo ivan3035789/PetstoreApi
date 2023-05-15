@@ -6,8 +6,6 @@ import lombok.Data;
 
 @Data
 public class SchemeAddingPetToStore {
-//    Pet pet = new Pet("89430780", "1", "cat", "crty", "1", "crty", "available");
-//    data.Data data = new data.Data();
 
     public JsonObject schema(
             String IdOfTheCreatedPet,
@@ -26,14 +24,4 @@ public class SchemeAddingPetToStore {
                 "}";
         return  (JsonObject) JsonParser.parseString(jsonString);
     }
-//    private String jsonString = "{ " +
-//            "id : " + pet.getIdOfTheCreatedPet() + "," +
-//            "petId : " + pet.getIdCategory() + "," +
-//            "quantity : " + data.getQuantity() + "," +
-//            "shipDate : " + data.getShipDate() + "," +
-//            "status : " + pet.getStatusTags() + "," +
-//            "complete : " + "true" +
-//            "}";
-//
-//    private JsonObject jsonObject = (JsonObject) JsonParser.parseString(jsonString);
 }

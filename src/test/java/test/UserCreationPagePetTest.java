@@ -4,28 +4,40 @@ package test;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.*;
 import requestSpecification.RequestUser;
+import utils.Utils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserCreationPagePetTest {
     RequestUser requestUser = new RequestUser();
+    Utils utils = new Utils();
+    String idUser = utils.idUser(8);
+    String userName = utils.firstName();
+    String firstName = utils.firstName();
+    String lastName = utils.lastName();
+    String email = utils.email();
+    String password =utils.password();
+    String updatePassword =utils.updatePassword();
+    String phone = utils.phone(10);
+    String updatePhone = utils.updatePhone(10);
+    String userStatus = utils.userStatus();
 
     @BeforeEach
     public void setUp() {
         requestUser.createUser(
-                "894307801",
-                "Genka",
-                "Genadiy",
-                "Ivanov",
-                "Genadiy@rambler.ru",
-                "0000",
-                "83332222222",
-                "1"
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                userStatus
         );
     }
 
     @AfterEach
     public void clearingData() {
-        requestUser.deleteUser("Genka");
+        requestUser.deleteUser(userName);
     }
 
     @Order(1)
@@ -33,7 +45,15 @@ public class UserCreationPagePetTest {
     @DisplayName("In this test case, we check the creation of a user")
     @Test
     public void mustCreateUser() {
-        requestUser.getUser("Genka");
+        requestUser.getUser(
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                userStatus);
     }
 
     @Order(2)
@@ -42,16 +62,24 @@ public class UserCreationPagePetTest {
     @Test
     public void mustUpdateUser() {
         requestUser.updateUser(
-                "894307801",
-                "Genka",
-                "Genadiy",
-                "Ivanov",
-                "Genadiy@rambler.ru",
-                "1111",
-                "84442222222",
-                "1"
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                updatePassword,
+                updatePhone,
+                userStatus
         );
-        requestUser.getUpdateUser("Genka");
+        requestUser.getUpdateUser(
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                updatePassword,
+                updatePhone,
+                userStatus);
     }
 
 
@@ -61,30 +89,30 @@ public class UserCreationPagePetTest {
     @Test
     public void mustLogIn() {
         requestUser.logsUserIntoSystem(
-                "894307801",
-                "Genka",
-                "Genadiy",
-                "Ivanov",
-                "Genadiy@rambler.ru",
-                "0000",
-                "83332222222",
-                "1"
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                userStatus
         );
     }
     @Order(4)
     @Description("В этом тест-кейсе мы проверяем выход пользователя из системы")
     @DisplayName("In this test case, we check the user's logout")
     @Test
-    public void userLogoutFromTheSystem() {
+    public void userLogout() {
         requestUser.userLogout(
-                "894307801",
-                "Genka",
-                "Genadiy",
-                "Ivanov",
-                "Genadiy@rambler.ru",
-                "0000",
-                "83332222222",
-                "1"
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                userStatus
         );
     }
 }
