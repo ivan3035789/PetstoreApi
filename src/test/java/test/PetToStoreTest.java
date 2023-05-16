@@ -5,70 +5,82 @@ import org.junit.jupiter.api.*;
 import requestSpecification.RequestPet;
 import requestSpecification.RequestShop;
 import requestSpecification.RequestUser;
+import utils.Utils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PetToStoreTest {
     RequestShop requestShop = new RequestShop();
     RequestPet requestPet = new RequestPet();
+    RequestUser requestUser = new RequestUser();
+    Utils utils = new Utils();
+    String idUser = utils.idUser(8);
+    String userName = utils.firstName();
+    String firstName = utils.firstName();
+    String lastName = utils.lastName();
+    String email = utils.email();
+    String password =utils.password();
+    String phone = utils.phone(10);
+    String userStatus = utils.userStatus();
 
-    @BeforeAll
-    public static void createPetAndUser() {
-        RequestUser requestUser = new RequestUser();
-        requestUser.createUser(
-                "894307801",
-                "Genka",
-                "Genadiy",
-                "Ivanov",
-                "Genadiy@rambler.ru",
-                "0000",
-                "83332222222",
-                "1"
-        );
-
-        requestUser.logsUserIntoSystem(
-                "894307801",
-                "Genka",
-                "Genadiy",
-                "Ivanov",
-                "Genadiy@rambler.ru",
-                "0000",
-                "83332222222",
-                "1"
-        );
-    }
-
-    @AfterAll
-    public static void deletePetAndUser() {
-        RequestUser requestUser = new RequestUser();
-        requestUser.deleteUser("Genka");
-    }
+    String idOfTheCreatedPet = utils.idOfTheCreatedPet(7);
+    String idCategory = utils.idCategory();
+    String nameCategory = utils.nameCategory();
+    String nameOfTheCreatedPet = utils.nameOfTheCreatedPet();
+    String idTags = utils.idTags(nameCategory);
+    String nameTags = utils.nameTags(idTags);
+    String statusTags = utils.statusTags();
+    String quantity = utils.quantity(1);
+    String shipDate = String.valueOf(utils.shipDate());
 
     @BeforeEach
     public void setUp() {
+        requestUser.createUser(
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                userStatus
+        );
+
+        requestUser.logsUserIntoSystem(
+                idUser,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phone,
+                userStatus
+        );
+
         requestPet.createPet(
-                "89430780",
-                "1",
-                "cat",
-                "crty",
-                "1",
-                "crty",
-                "available"
+                idOfTheCreatedPet,
+                idCategory,
+                nameCategory,
+                nameOfTheCreatedPet,
+                idTags,
+                nameTags,
+                statusTags
         );
 
         requestShop.addPetStore(
-                "89430780",
-                "1",
-                "1",
-                "100",
-                "available",
-                "true"
+                idOfTheCreatedPet,
+                idCategory,
+                quantity,
+                shipDate,
+                nameTags,
+                true
         );
     }
 
     @AfterEach
     public void clearingData() {
-        requestShop.deletePetStore("89430780");
-        requestPet.deletePet("89430780");
+        requestShop.deletePetStore(idOfTheCreatedPet);
+        requestPet.deletePet(idOfTheCreatedPet);
+        requestUser.deleteUser(userName);
     }
 
     @Order(1)
@@ -76,15 +88,19 @@ public class PetToStoreTest {
     @DisplayName("In this test case, we check the addition of a pet to the store")
     @Test
     void mustAddPetStore() {
-        requestShop.getPetStore("89430780");
+        requestShop.getPetStore(
+                idOfTheCreatedPet,
+                idCategory,
+                nameTags,
+                true);
     }
 
     @Order(2)
-    @Description("В этом тест-кейсе мы проверяем ошуществление поиска заказа на покупку по идентификатору")
+    @Description("В этом тест-кейсе мы проверяем ошуществление поиска питомца на покупку по идентификатору")
     @DisplayName("the purchase order must be searched by ID")
     @Test
     void mustFindOrderById() {
-        requestShop.getPetStore("89430780");
+        requestShop.searchForPetsById(idOfTheCreatedPet);
     }
 
     @Order(2)

@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class PetCreationScheme {
-//    Pet pet = new Pet("89430780", "1", "cat", "crty", "1", "crty", "available");
 
     public JsonObject schema(
             String IdOfTheCreatedPet,
@@ -32,6 +31,7 @@ public class PetCreationScheme {
                 "]," +
                 "status : " + StatusTags +
                 "}";
+
         return (JsonObject) JsonParser.parseString(jsonString);
     }
 }

@@ -193,8 +193,6 @@ public class RequestUser {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"));
-//                .body("message", equalTo("logged in user session:" + given().body("message".substring(10))));
-//                .body("message", equalTo("logged in user session:"));
     }
 
     @Description("Метод GET выход пользователя из системы")

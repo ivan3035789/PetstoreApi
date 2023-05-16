@@ -13,7 +13,7 @@ public class SchemeAddingPetToStore {
             String Quantity,
             String ShipDate,
             String StatusTags,
-            String bool) {
+            boolean bool) {
         String jsonString = "{ " +
                 "id : " + IdOfTheCreatedPet + "," +
                 "petId : " + IdCategory + "," +
@@ -22,6 +22,7 @@ public class SchemeAddingPetToStore {
                 "status : " + StatusTags + "," +
                 "complete : " + bool +
                 "}";
+
         return  (JsonObject) JsonParser.parseString(jsonString);
     }
 }

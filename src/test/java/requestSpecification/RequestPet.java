@@ -36,7 +36,8 @@ public class RequestPet {
                           String StatusTags) {
         given()
                 .spec(requestSpec)
-                .body(gson.toJson(petCreationScheme.schema(IdOfTheCreatedPet,
+                .body(gson.toJson(petCreationScheme.schema(
+                        IdOfTheCreatedPet,
                         IdCategory,
                         NameCategory,
                         NameOfTheCreatedPet,
@@ -51,10 +52,10 @@ public class RequestPet {
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
-                .body("id", equalTo(89430780))
-                .body("name", equalTo("crty"))
-                .body("status", equalTo("available"))
-                .body("category.name", equalTo("cat"));
+                .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
+                .body("name", equalTo(NameOfTheCreatedPet))
+                .body("status", equalTo(StatusTags))
+                .body("category.name", equalTo(NameCategory));
     }
 
     @Description("Метод DELETE удалить созданного питомца")
@@ -70,11 +71,14 @@ public class RequestPet {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
-                .body("message", equalTo("89430780"));
+                .body("message", equalTo(IdOfTheCreatedPet));
     }
 
     @Description("Метод GET найти созданного питомца")
-    public void getPet(String IdOfTheCreatedPet) {
+    public void getPet(String IdOfTheCreatedPet,
+                       String NameCategory,
+                       String NameOfTheCreatedPet,
+                       String StatusTags) {
         given()
                 .spec(requestSpec)
                 .when()
@@ -85,10 +89,10 @@ public class RequestPet {
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
-                .body("id", equalTo(89430780))
-                .body("name", equalTo("crty"))
-                .body("status", equalTo("available"))
-                .body("category.name", equalTo("cat"))
+                .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
+                .body("name", equalTo(NameOfTheCreatedPet))
+                .body("status", equalTo(StatusTags))
+                .body("category.name", equalTo(NameCategory))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"));
     }
 
@@ -118,10 +122,10 @@ public class RequestPet {
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
-                .body("id", equalTo(89430780))
-                .body("name", equalTo("rufus"))
-                .body("status", equalTo("sold"))
-                .body("tags[0].name", equalTo("rufus"))
+                .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
+                .body("name", equalTo(NameOfTheCreatedPet))
+                .body("status", equalTo(StatusTags))
+                .body("tags[0].name", equalTo(NameTags))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"));
     }
 
@@ -137,7 +141,7 @@ public class RequestPet {
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
-                .body("[0].status", equalTo("available"))
+                .body("[0].status", equalTo(status))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"));
     }
 
@@ -228,7 +232,6 @@ public class RequestPet {
                 .get(pagePet.petGetPage(IdOfTheCreatedPet))
                 .then()
                 .assertThat()
-//                .statusCode(1)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))

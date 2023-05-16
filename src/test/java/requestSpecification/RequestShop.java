@@ -31,7 +31,7 @@ public class RequestShop {
                             String Quantity,
                             String ShipDate,
                             String StatusTags,
-                            String bool) {
+                            boolean bool) {
         given()
                 .spec(requestSpec)
                 .body(gson.toJson(schemeAddingPetToStore.schema(
@@ -49,10 +49,10 @@ public class RequestShop {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"))
-                .body("id", equalTo(89430780))
-                .body("petId", equalTo(1))
-                .body("status", equalTo("available"))
-                .body("complete", equalTo(true));
+                .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
+                .body("petId", equalTo(Integer.parseInt(IdCategory)))
+                .body("status", equalTo(StatusTags))
+                .body("complete", equalTo(bool));
     }
 
     @Description("Метод DELETE удалить питомца из заказа")
@@ -67,10 +67,14 @@ public class RequestShop {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
-                .body("message", equalTo("89430780"));
+                .body("message", equalTo(IdOfTheCreatedPet));
     }
     @Description("Метод GET найти питомца в заказе")
-    public void getPetStore(String IdOfTheCreatedPet) {
+    public void getPetStore(
+            String IdOfTheCreatedPet,
+            String IdCategory,
+            String nameTags,
+            boolean bool) {
         given()
                 .spec(requestSpec)
                 .when()
@@ -81,10 +85,25 @@ public class RequestShop {
                 .contentType(ContentType.JSON)
                 .time(lessThan(5000L))
                 .body(matchesJsonSchemaInClasspath("schemaStore.json"))
-                .body("id", equalTo(89430780))
-                .body("petId", equalTo(1))
-                .body("status", equalTo("available"))
-                .body("complete", equalTo(true));
+                .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
+                .body("petId", equalTo(Integer.parseInt(IdCategory)))
+                .body("status", equalTo(nameTags))
+                .body("complete", equalTo(bool));
+    }
+
+    @Description("Метод GET найти питомца в заказе")
+    public void searchForPetsById(String IdOfTheCreatedPet) {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(pageShop.petGetStore(IdOfTheCreatedPet))
+                .then()
+                .statusCode(200)
+                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
+                .time(lessThan(5000L))
+                .body(matchesJsonSchemaInClasspath("schemaStore.json"))
+                .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)));
     }
 
     @Description("Метод GET найти количество питомцев в запасе")

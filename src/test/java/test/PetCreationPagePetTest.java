@@ -10,30 +10,40 @@ public class PetCreationPagePetTest {
 RequestPet requestPet = new RequestPet();
 Utils utils = new Utils();
 
-String idOfTheCreatedPet = utils.idOfTheCreatedPet(8);
+String idOfTheCreatedPet = utils.idOfTheCreatedPet(7);
+String invalidIdOfTheCreatedPet = "%";
+
+String invalidIdOfTheCreatedPet2 = "?";
 String idCategory = utils.idCategory();
 String nameCategory = utils.nameCategory();
 String nameOfTheCreatedPet = utils.nameOfTheCreatedPet();
 String idTags = utils.idTags(nameCategory);
 String nameTags = utils.nameTags(idTags);
+
+String updateNameTags = utils.updateNameTags(nameTags);
 String statusTags = utils.statusTags();
+
+String updateStatusTags = utils.updateStatusTags(statusTags);
+String invalidStatus = "as";
+
+String idOfPetThatWasNotCreated = utils.idOfPetThatWasNotCreated(10);
 
     @BeforeEach
     public void setUp() {
         requestPet.createPet(
-                "89430780",
-                "1",
-                "cat",
-                "crty",
-                "1",
-                "crty",
-                "available"
+                idOfTheCreatedPet,
+                idCategory,
+                nameCategory,
+                nameOfTheCreatedPet,
+                idTags,
+                nameTags,
+                statusTags
         );
     }
 
     @AfterEach
     public void clearingData() {
-        requestPet.deletePet("89430780");
+        requestPet.deletePet(idOfTheCreatedPet);
     }
 
     @Order(1)
@@ -41,7 +51,11 @@ String statusTags = utils.statusTags();
     @DisplayName("In this test case, we check the creation of a pet")
     @Test
     public void mustCreatePet() {
-        requestPet.getPet("89430780");
+        requestPet.getPet(
+                idOfTheCreatedPet,
+                nameCategory,
+                nameOfTheCreatedPet,
+                statusTags);
     }
 
     @Order(2)
@@ -50,13 +64,13 @@ String statusTags = utils.statusTags();
     @Test
     public void mustUpdatePet() {
         requestPet.UpdatePet(
-                "89430780",
-                "1",
-                "cat",
-                utils.updateNamePet(),
-                "1",
-                utils.UpdateTagsName("1"),
-                utils.updateStatus());
+                idOfTheCreatedPet,
+                idCategory,
+                nameCategory,
+                nameOfTheCreatedPet,
+                idTags,
+                updateNameTags,
+                updateStatusTags);
     }
 
     @Order(3)
@@ -64,7 +78,7 @@ String statusTags = utils.statusTags();
     @DisplayName("In this test case, we check the search by pet status")
     @Test
     public void findByStatus() {
-        requestPet.petGetStatus("available");
+        requestPet.petGetStatus(statusTags);
     }
 
     @Order(4)
@@ -73,13 +87,13 @@ String statusTags = utils.statusTags();
     @Test
     public void mustUpdatePetDataInStore() {
         requestPet.mustNotChangePetId(
-                "%",
-                "1",
-                "cat",
-                "crty",
-                "1",
-                "crty",
-                "available"
+                invalidIdOfTheCreatedPet,
+                idCategory,
+                nameCategory,
+                nameOfTheCreatedPet,
+                idTags,
+                updateNameTags,
+                updateStatusTags
         );
     }
 
@@ -88,7 +102,7 @@ String statusTags = utils.statusTags();
     @DisplayName("must not find an animal by statuses with an incorrectly entered value")
     @Test
     public void mustNotFindPet() {
-    requestPet.mustNotFindPetByIncorrectStatus("as");
+    requestPet.mustNotFindPetByIncorrectStatus(invalidStatus);
     }
 
     @Order(6)
@@ -97,13 +111,13 @@ String statusTags = utils.statusTags();
     @Test
     public void petShouldNotBeAdded() {
         requestPet.notCreatePet(
-                "?",
-                "1",
-                "cat",
-                "crty",
-                "1",
-                "crty",
-                "available"
+                invalidIdOfTheCreatedPet2,
+                idCategory,
+                nameCategory,
+                nameOfTheCreatedPet,
+                idTags,
+                nameTags,
+                statusTags
         );
     }
 
@@ -112,8 +126,6 @@ String statusTags = utils.statusTags();
     @DisplayName("In this test case, we check the impossibility of finding an uncreated pet")
     @Test
     public void mustNotFindAnUnCreatedPet() {
-        requestPet.mustNotFindAnUnCreatedPet(
-                "8943078015");
+        requestPet.mustNotFindAnUnCreatedPet(idOfPetThatWasNotCreated);
     }
-
 }
