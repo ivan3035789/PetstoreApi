@@ -69,7 +69,7 @@ jobs:
       if: success() || failure()
       with:
         name: Report_index.html
-        path: ./fmh-android/app/build/reports/tests/test/index.html 
+        path: build/reports/tests/test/index.html 
   report:
     runs-on: ubuntu-latest
     needs: tests 
