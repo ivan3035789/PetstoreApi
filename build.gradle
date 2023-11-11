@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-    id "io.freefair.lombok" version "5.1.0"
-//    id 'io.qameta.allure' version '2.8.1'
 }
 
 group 'ru.netology'
@@ -10,14 +8,6 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 11
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
-
-//allure {
-//    autoconfigure = true
-//    version = '2.13.0'
-//    useJUnit5 {
-//        version = '2.13.0'
-//    }
-//}
 
 repositories {
     mavenCentral()
@@ -30,11 +20,9 @@ dependencies {
     testImplementation 'com.google.code.gson:gson:2.10.1'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-    testImplementation 'org.slf4j:slf4j-simple:2.0.5'
-    testImplementation 'com.codeborne:selenide:6.12.3'
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
 }
 
 test {
     useJUnitPlatform()
-    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
 }

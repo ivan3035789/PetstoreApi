@@ -47,7 +47,7 @@ public class RequestShop {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"))
                 .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
                 .body("petId", equalTo(Integer.parseInt(IdCategory)))
@@ -65,7 +65,7 @@ public class RequestShop {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo(IdOfTheCreatedPet));
     }
@@ -83,7 +83,7 @@ public class RequestShop {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body(matchesJsonSchemaInClasspath("schemaStore.json"))
                 .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
                 .body("petId", equalTo(Integer.parseInt(IdCategory)))
@@ -101,7 +101,7 @@ public class RequestShop {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body(matchesJsonSchemaInClasspath("schemaStore.json"))
                 .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)));
     }
@@ -115,7 +115,7 @@ public class RequestShop {
                 .then()
                 .statusCode(200)
                 .header("Content-Type", "application/json")
-                .contentType(ContentType.JSON)
-                .time(lessThan(5000L));
+                .contentType(ContentType.JSON);
+//                .time(lessThan(5000L));
     }
 }

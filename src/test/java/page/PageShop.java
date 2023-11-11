@@ -1,12 +1,12 @@
 package page;
 
 import jdk.jfr.Description;
-import lombok.Data;
 
-@Data
 public class PageShop {
 
-    private String baseUri = "https://petstore.swagger.io/v2";
+    public String getBaseUri() {
+        return "https://petstore.swagger.io/v2";
+    }
 
     @Description("добавление питомца в заказ")
     public String petAddStore() {

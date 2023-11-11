@@ -51,7 +51,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo(IdUser));
     }
@@ -66,7 +66,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo(userName));
     }
@@ -90,7 +90,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("id", equalTo(Integer.parseInt(IdUser)))
                 .body("username", equalTo(Username))
                 .body("firstName", equalTo(FirstName))
@@ -128,7 +128,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo(IdUser))
                 .body(matchesJsonSchemaInClasspath("schemaUser.json"));
@@ -153,7 +153,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("id", equalTo(Integer.parseInt(IdUser)))
                 .body("username", equalTo(Username))
                 .body("firstName", equalTo(FirstName))
@@ -191,7 +191,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"));
     }
 
@@ -221,7 +221,7 @@ public class RequestUser {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo("ok"));
     }

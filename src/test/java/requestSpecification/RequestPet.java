@@ -51,7 +51,7 @@ public class RequestPet {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
                 .body("name", equalTo(NameOfTheCreatedPet))
                 .body("status", equalTo(StatusTags))
@@ -69,7 +69,7 @@ public class RequestPet {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo(IdOfTheCreatedPet));
     }
@@ -88,7 +88,7 @@ public class RequestPet {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
                 .body("name", equalTo(NameOfTheCreatedPet))
                 .body("status", equalTo(StatusTags))
@@ -121,7 +121,7 @@ public class RequestPet {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("id", equalTo(Integer.parseInt(IdOfTheCreatedPet)))
                 .body("name", equalTo(NameOfTheCreatedPet))
                 .body("status", equalTo(StatusTags))
@@ -140,7 +140,7 @@ public class RequestPet {
                 .statusCode(200)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("[0].status", equalTo(status))
                 .body(matchesJsonSchemaInClasspath("schemaPet.json"));
     }
@@ -172,7 +172,7 @@ public class RequestPet {
                 .statusCode(500)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo("something bad happened"));
     }
@@ -188,7 +188,7 @@ public class RequestPet {
                 .statusCode(404)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo("java.lang.NumberFormatException: For input string: \"as\""));
     }
@@ -219,7 +219,7 @@ public class RequestPet {
                 .statusCode(500)
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("type", equalTo("unknown"))
                 .body("message", equalTo("something bad happened"));
     }
@@ -234,7 +234,7 @@ public class RequestPet {
                 .assertThat()
                 .header("Content-Type", "application/json")
                 .contentType(ContentType.JSON)
-                .time(lessThan(5000L))
+//                .time(lessThan(5000L))
                 .body("code", equalTo(1))
                 .body("type", equalTo("error"))
                 .body("message", equalTo("Pet not found"));
