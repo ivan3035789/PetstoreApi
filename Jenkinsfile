@@ -8,5 +8,12 @@ pipeline{
                 echo '====== BUILD FINISH ======'
             }
         }
+        stage("TEST REPORT"){    
+            steps {
+                echo '======= TEST REPORT ======='
+                archiveArtifacts artifacts: 'build/reports/tests/', fingerprint: true
+                echo '======= TEST REPORT READY======='
+            }
+        }
     }
 }
